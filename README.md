@@ -1,2 +1,2 @@
 # Java-JDBC
-Exercícios e projetos com JDBC
+Repositório decidado aos estudos e implementações de java utilizando JDBC
