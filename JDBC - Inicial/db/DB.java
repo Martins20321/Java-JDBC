@@ -1,4 +1,4 @@
-package db;
+package DB;
 
 import java.io.FileInputStream;
 import java.io.IOException;
@@ -11,61 +11,65 @@ import java.util.Properties;
 
 public class DB {
 
-	private static Connection con = null;
+	private static Connection conn = null;
+	private static ResultSet rs = null;
+	private static Statement st = null;
 	
-	
-	public static Connection getConnection() { //gerar uma conexão com o banco de daods
-		if(con == null) {
-			try {
-			Properties props = loadProperties(); //chamando o método
-			String url = props.getProperty("dburl");//url dedinida no db.properties
-			con = DriverManager.getConnection(url, props);//Obter conexão com o Banco de Dados
-			}
-			catch(SQLException e) {
-				throw new DbException(e.getMessage());
-			}
-			}
-		return con;
-	}
-	
-	public static void closeConnection() { //fechando a conexão
-		if(con != null) {
-			try {
-			con.close();
-			}
-			catch(SQLException e) {
-				throw new DbException(e.getMessage());
-			}
-		}
-	}
-
+	// metodo para carregar o properties
 	private static Properties loadProperties() {
-		try (FileInputStream fs = new FileInputStream("db.properties")) {
+		try (FileInputStream fs = new FileInputStream("db.properties")) {// Recebendo o arquivo
 			Properties props = new Properties();
-			props.load(fs);
+			props.load(fs);// load = ler o arquivo
 			return props;
 		} catch (IOException e) {
 			throw new DbException(e.getMessage());
 		}
 	}
-	//Metotos auxiliares para fechar um objeto
-	public static void closeStatement(Statement st) {
-		if(st != null) {
+
+	// metodo para conectar com o banco de dados
+	public static Connection getConnection() {
+		if (conn == null) {
 			try {
-				st.close();
+				Properties props = loadProperties();// Pegou as propriedades do banco
+				String url = props.getProperty("dburl");
+				conn = DriverManager.getConnection(url, props);
 			} catch (SQLException e) {
 				throw new DbException(e.getMessage());
 			}
 		}
+		return conn;
 	}
-	public static void closeResult(ResultSet st) {
+
+	// metodo para fechar conexao
+	public static void closeConnection() {
+		try {
+		if(conn != null) { 
+			conn.close();
+		}
+		}
+		catch(SQLException e) {
+			throw new DbException(e.getMessage());
+		}
+	}
+	
+	public static void closeResultSet(ResultSet rs) {
+		try {
+		if(rs != null) {
+			rs.close();
+		}
+		}
+		catch(SQLException e) {
+			throw new DbException(e.getMessage());
+		}
+	}
+	public static void closeStatement(Statement st) {
+		try {
 		if(st != null) {
-			try {
-				st.close();
-			} 
-			catch (SQLException e) {
-				throw new DbException(e.getMessage());
-			}
+			st.close();
+		}
+		}
+		catch(SQLException e) {
+			throw new DbException(e.getMessage());
 		}
 	}
 }
