@@ -13,5 +13,12 @@ public static void main(String[] args) {
 	Department newDep = new Department(null, "José Gabriel");
 	depDao.insert(newDep);
 	System.out.println("Insert Completed! New Id: " + newDep.getId());
+	
+	System.out.println();
+	System.out.println("=== TEST 2: Department Update ====");
+	
+	System.out.println();
+	System.out.println("=== TEST 3: Department Delete ====");
+	
 }
 }
