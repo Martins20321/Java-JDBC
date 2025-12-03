@@ -15,10 +15,15 @@ public static void main(String[] args) {
 	System.out.println("Insert Completed! New Id: " + newDep.getId());
 	
 	System.out.println();
-	System.out.println("=== TEST 2: Department Update ====");
+	System.out.println("=== TEST 2: Department FindByID ====");
+	Department dep = depDao.findById(6);
+	System.out.println(dep);
+
+	System.out.println();
+	System.out.println("=== TEST 3: Department Update ====");
 	
 	System.out.println();
-	System.out.println("=== TEST 3: Department Delete ====");
+	System.out.println("=== TEST 4: Department Delete ====");
 	
 }
 }
